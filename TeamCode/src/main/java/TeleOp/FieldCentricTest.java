@@ -22,6 +22,7 @@ public class FieldCentricTest extends RobotSubsystem {
         driverPad = new GamepadEx(gamepad1);
         operatorPad = new GamepadEx(gamepad2);
 
+
         initialize(hardwareMap);
 
         CommandScheduler.getInstance().setDefaultCommand(drive,
@@ -30,7 +31,7 @@ public class FieldCentricTest extends RobotSubsystem {
                         () -> driverPad.getLeftX(),
                         () -> driverPad.getLeftY(),
                         () -> driverPad.getRightX(),
-                        1
+                        drive.getHeadingRads()
                 )
         );
 
