@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-import lib.Drivers.GoBildaPinpointDriver;
+import Drivers.GoBildaPinpointDriver;
 
 public class DriveSubsystem extends SubsystemBase {
     GoBildaPinpointDriver odo; // Declare OpMode member for the Odometry Computer
@@ -75,5 +75,11 @@ public class DriveSubsystem extends SubsystemBase {
         rightFront.setPower(power);
         rightBack.setPower(power);
     }
+
+    public void reset(){
+        odo.recalibrateIMU();
+    }
+
+
 }
 

@@ -1,10 +1,13 @@
 package TeleOp;
 
 import Commands.Custom.DefaultDriveCommand;
+import Commands.Custom.ResetFieldCentricCommand;
 import Subsystems.DriveSubsystem;
 import Subsystems.RobotSubsystem;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
@@ -50,6 +53,7 @@ public class FieldCentricTest extends RobotSubsystem {
 
 
             telemetry.update();
+            update();
 
 
         }
@@ -58,6 +62,10 @@ public class FieldCentricTest extends RobotSubsystem {
 
 
     public void configureOperator() {
+
+        driverPad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
+                new ResetFieldCentricCommand(drive)
+        );
 
     }
 }
