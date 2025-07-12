@@ -1,4 +1,4 @@
-package Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.Drivers.GoBildaPinpointDriver;
 
-import lib.Drivers.GoBildaPinpointDriver;
 
 public class DriveSubsystem extends SubsystemBase {
     GoBildaPinpointDriver odo; // Declare OpMode member for the Odometry Computer

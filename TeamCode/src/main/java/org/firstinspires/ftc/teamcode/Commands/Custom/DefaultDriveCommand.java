@@ -1,4 +1,4 @@
-package Commands.Custom;
+package org.firstinspires.ftc.teamcode.Commands.Custom;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
@@ -6,7 +6,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.function.DoubleSupplier;
 
-import Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
 
 public class DefaultDriveCommand extends CommandBase {
     DriveSubsystem driveSubsystem;
