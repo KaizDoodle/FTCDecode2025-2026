@@ -1,9 +1,9 @@
-package TeleOp;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
-import Commands.Custom.DefaultDriveCommand;
-import Commands.Custom.ResetFieldCentricCommand;
-import Subsystems.DriveSubsystem;
-import Subsystems.RobotSubsystem;
+import org.firstinspires.ftc.teamcode.Commands.Custom.DefaultDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.Custom.ResetFieldCentricCommand;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.RobotSubsystem;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;

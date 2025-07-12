@@ -1,8 +1,8 @@
-package Commands.Custom;
+package org.firstinspires.ftc.teamcode.Commands.Custom;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 
-import Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
 
 public class ResetFieldCentricCommand extends InstantCommand {
     DriveSubsystem drive;
