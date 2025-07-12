@@ -31,7 +31,7 @@ public class FieldCentricTest extends RobotSubsystem {
         CommandScheduler.getInstance().setDefaultCommand(drive,
                 new DefaultDriveCommand(
                         drive,
-                        () -> driverPad.getLeftX(),
+                        () -> -driverPad.getLeftX(),
                         () -> driverPad.getLeftY(),
                         () -> driverPad.getRightX(),
                         drive.getHeadingRads()

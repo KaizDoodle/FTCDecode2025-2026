@@ -14,6 +14,6 @@ public class ResetFieldCentricCommand extends InstantCommand {
 
     @Override
     public void initialize() {
-        drive.reset();
+        drive.resetHeading();
     }
 }
