@@ -12,7 +12,7 @@ public abstract class RobotSubsystem extends LinearOpMode {
 //    public WristSubsystem wrist;
 //    public IntakeSubsystem intake;
     public DriveSubsystem drive;
-    public LMECSubsystem lmec;
+//    public LMECSubsystem lmec;
 
     public CommandScheduler cs = CommandScheduler.getInstance();
 
@@ -34,7 +34,7 @@ public abstract class RobotSubsystem extends LinearOpMode {
 //        slides = new SlideSubsystem(hardwareMap);
 //        lmec = new LMECSubsystem(hardwareMap);
 
-        CommandScheduler.getInstance().registerSubsystem(drive, lmec);
+        CommandScheduler.getInstance().registerSubsystem(drive);
     }
 
 
