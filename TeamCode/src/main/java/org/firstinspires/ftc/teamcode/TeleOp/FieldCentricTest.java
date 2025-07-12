@@ -49,11 +49,13 @@ public class FieldCentricTest extends RobotSubsystem {
             telemetry.addData("Gamepad1 Rx", driverPad.getRightX());
             telemetry.addData("Gamepad1 Ly", driverPad.getLeftY());
             telemetry.addData("Gamepad1 Lx", driverPad.getLeftX());
+
             telemetry.addData("Heading", drive.getHeadingRads());
 
 
             telemetry.update();
             update();
+
 
 
         }

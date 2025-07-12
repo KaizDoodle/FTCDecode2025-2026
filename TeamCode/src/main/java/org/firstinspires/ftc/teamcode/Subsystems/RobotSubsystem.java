@@ -35,6 +35,7 @@ public abstract class RobotSubsystem extends LinearOpMode {
 //        lmec = new LMECSubsystem(hardwareMap);
 
         CommandScheduler.getInstance().registerSubsystem(drive);
+
     }
 
 
@@ -46,6 +47,8 @@ public abstract class RobotSubsystem extends LinearOpMode {
     public void update() {
         CommandScheduler.getInstance().run();
         telemetry.update();
+        drive.odoUpdate();
+
     }
     public void end() {
         cs.reset();

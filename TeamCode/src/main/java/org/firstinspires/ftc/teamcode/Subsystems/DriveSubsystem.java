@@ -38,6 +38,13 @@ public class DriveSubsystem extends SubsystemBase {
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+
+        odo.resetPosAndIMU();
+
     }
 
     public double getHeadingRads() {
@@ -78,6 +85,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void reset(){
         odo.recalibrateIMU();
+    }
+
+    public void odoUpdate() {
+        odo.update();
+
     }
 
 
