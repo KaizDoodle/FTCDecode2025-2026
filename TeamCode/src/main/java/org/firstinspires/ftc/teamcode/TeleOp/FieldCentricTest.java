@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import org.firstinspires.ftc.teamcode.Commands.Custom.DefaultDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.Custom.ResetFieldCentricCommand;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.OdometrySubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.RobotSubsystem;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
@@ -16,6 +17,7 @@ public class FieldCentricTest extends RobotSubsystem {
 
     protected GamepadEx driverPad;
     protected GamepadEx operatorPad;
+
 
 
     @Override
@@ -33,8 +35,7 @@ public class FieldCentricTest extends RobotSubsystem {
                         drive,
                         () -> driverPad.getLeftY(),
                         () -> driverPad.getLeftX(),
-                        () -> driverPad.getRightX(),
-                        odo.getHeadingRads()
+                        () -> driverPad.getRightX()
                 )
         );
 
@@ -50,7 +51,7 @@ public class FieldCentricTest extends RobotSubsystem {
 
     public void configureOperator() {
 
-        driverPad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
+        driverPad.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ResetFieldCentricCommand(odo)
         );
 

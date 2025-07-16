@@ -7,26 +7,25 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.function.DoubleSupplier;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.OdometrySubsystem;
 
 public class DefaultDriveCommand extends CommandBase {
     DriveSubsystem driveSubsystem;
     DoubleSupplier x, y, rx;
-    double heading;
     Telemetry telemetry;
 
-    public DefaultDriveCommand(DriveSubsystem driveSubsystem, DoubleSupplier inputY, DoubleSupplier inputX, DoubleSupplier inputRx, double robotHeading) {
+    public DefaultDriveCommand(DriveSubsystem driveSubsystem, DoubleSupplier inputY, DoubleSupplier inputX, DoubleSupplier inputRx) {
         this.driveSubsystem = driveSubsystem;
         this.x = inputX;
         this.y = inputY;
         this.rx = inputRx;
-        this.heading = robotHeading;
         addRequirements(driveSubsystem);
 
     }
 
     @Override
     public void execute() {
-        driveSubsystem.driveFieldCentric(x.getAsDouble() + getXModPower(), y.getAsDouble() + getYModPower(), rx.getAsDouble() + getRModPower(), heading);
+        driveSubsystem.driveFieldCentric(x.getAsDouble() + getXModPower(), y.getAsDouble() + getYModPower(), rx.getAsDouble() + getRModPower());
     }
 
     public double getXModPower() {

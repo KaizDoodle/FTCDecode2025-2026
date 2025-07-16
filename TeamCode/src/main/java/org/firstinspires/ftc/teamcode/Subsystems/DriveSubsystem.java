@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Drivers.GoBildaPinpointDriver;
 
 public class DriveSubsystem extends SubsystemBase {
+    GoBildaPinpointDriver odo;
 
     DcMotor leftFront;
     DcMotor leftBack;
@@ -39,11 +40,16 @@ public class DriveSubsystem extends SubsystemBase {
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
+        odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        odo.resetPosAndIMU();
     }
 
 
 
-    public void driveFieldCentric(double gamepadX, double gamepadY, double gamepadRX, double heading) {
+    public void driveFieldCentric(double gamepadX, double gamepadY, double gamepadRX) {
+        double heading = getHeadingRads();
         double rotX = gamepadX * Math.cos(-heading) - gamepadY * Math.sin(-heading);
         double rotY = gamepadX * Math.sin(-heading) + gamepadY * Math.cos(-heading);
 
@@ -69,6 +75,23 @@ public class DriveSubsystem extends SubsystemBase {
         leftBack.setPower(power);
         rightFront.setPower(power);
         rightBack.setPower(power);
+    }
+
+    public double getHeadingRads() {
+        return odo.getHeading(AngleUnit.RADIANS);
+    }
+
+    public double getHeadingDeg() {
+        return odo.getHeading(AngleUnit.DEGREES);
+    }
+
+    public void resetHeading(){
+        odo.recalibrateIMU();
+    }
+
+    public void odoUpdate() {
+        odo.update();
+
     }
 
 
