@@ -14,7 +14,7 @@ public class DefaultDriveCommand extends CommandBase {
     double heading;
     Telemetry telemetry;
 
-    public DefaultDriveCommand(DriveSubsystem driveSubsystem, DoubleSupplier inputX, DoubleSupplier inputY, DoubleSupplier inputRx, double robotHeading) {
+    public DefaultDriveCommand(DriveSubsystem driveSubsystem, DoubleSupplier inputY, DoubleSupplier inputX, DoubleSupplier inputRx, double robotHeading) {
         this.driveSubsystem = driveSubsystem;
         this.x = inputX;
         this.y = inputY;
@@ -26,7 +26,7 @@ public class DefaultDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        driveSubsystem.driveFieldCentric(x.getAsDouble() + getXModPower(), -y.getAsDouble() + getYModPower(), rx.getAsDouble() + getRModPower(), heading);
+        driveSubsystem.driveFieldCentric(x.getAsDouble() + getXModPower(), y.getAsDouble() + getYModPower(), rx.getAsDouble() + getRModPower(), heading);
     }
 
     public double getXModPower() {

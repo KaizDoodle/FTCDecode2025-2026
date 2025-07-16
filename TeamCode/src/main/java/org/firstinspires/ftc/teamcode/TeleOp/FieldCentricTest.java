@@ -31,33 +31,18 @@ public class FieldCentricTest extends RobotSubsystem {
         CommandScheduler.getInstance().setDefaultCommand(drive,
                 new DefaultDriveCommand(
                         drive,
-                        () -> driverPad.getLeftX(),
                         () -> driverPad.getLeftY(),
+                        () -> driverPad.getLeftX(),
                         () -> driverPad.getRightX(),
                         odo.getHeadingRads()
                 )
         );
 
         configureOperator();
-
-
         waitForStart();
 
         while (opModeIsActive()){
-
-            telemetry.addData("Gamepad1 Ry", driverPad.getRightY());
-            telemetry.addData("Gamepad1 Rx", driverPad.getRightX());
-            telemetry.addData("Gamepad1 Ly", driverPad.getLeftY());
-            telemetry.addData("Gamepad1 Lx", driverPad.getLeftX());
-
-            telemetry.addData("Heading", odo.getHeadingRads());
-
-
-            telemetry.update();
             update();
-
-
-
         }
         CommandScheduler.getInstance().reset();
     }
