@@ -3,17 +3,18 @@ package org.firstinspires.ftc.teamcode.Commands.Custom;
 import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.OdometrySubsystem;
 
 public class ResetFieldCentricCommand extends InstantCommand {
-    DriveSubsystem drive;
+    OdometrySubsystem odo;
 
-    public ResetFieldCentricCommand (DriveSubsystem drive){
-        this.drive = drive;
-        addRequirements(drive);
+    public ResetFieldCentricCommand (OdometrySubsystem odo){
+        this.odo = odo;
+        addRequirements(odo);
     }
 
     @Override
     public void initialize() {
-        drive.resetHeading();
+        odo.resetHeading();
     }
 }

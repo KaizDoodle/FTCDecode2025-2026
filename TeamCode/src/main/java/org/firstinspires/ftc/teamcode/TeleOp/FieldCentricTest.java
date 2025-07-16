@@ -31,10 +31,10 @@ public class FieldCentricTest extends RobotSubsystem {
         CommandScheduler.getInstance().setDefaultCommand(drive,
                 new DefaultDriveCommand(
                         drive,
-                        () -> -driverPad.getLeftX(),
+                        () -> driverPad.getLeftX(),
                         () -> driverPad.getLeftY(),
                         () -> driverPad.getRightX(),
-                        drive.getHeadingRads()
+                        odo.getHeadingRads()
                 )
         );
 
@@ -50,7 +50,7 @@ public class FieldCentricTest extends RobotSubsystem {
             telemetry.addData("Gamepad1 Ly", driverPad.getLeftY());
             telemetry.addData("Gamepad1 Lx", driverPad.getLeftX());
 
-            telemetry.addData("Heading", drive.getHeadingRads());
+            telemetry.addData("Heading", odo.getHeadingRads());
 
 
             telemetry.update();
@@ -66,7 +66,7 @@ public class FieldCentricTest extends RobotSubsystem {
     public void configureOperator() {
 
         driverPad.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-                new ResetFieldCentricCommand(drive)
+                new ResetFieldCentricCommand(odo)
         );
 
     }

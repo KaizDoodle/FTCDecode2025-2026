@@ -13,14 +13,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Drivers.GoBildaPinpointDriver;
 
 public class DriveSubsystem extends SubsystemBase {
-    GoBildaPinpointDriver odo; // Declare OpMode member for the Odometry Computer
 
     DcMotor leftFront;
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor rightFront;
-    IMU imu;
-    
     
 
     public DriveSubsystem(final HardwareMap hardwareMap) {
@@ -31,8 +28,7 @@ public class DriveSubsystem extends SubsystemBase {
         leftBack = hardwareMap.get(DcMotorEx.class, "backLeft");
         rightBack = hardwareMap.get(DcMotorEx.class, "backRight");
         rightFront = hardwareMap.get(DcMotorEx.class, "frontRight");
-        odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
-        imu = hardwareMap.get(IMU.class, "imu");
+
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -42,22 +38,10 @@ public class DriveSubsystem extends SubsystemBase {
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-
-        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-
-        odo.resetPosAndIMU();
-
 
     }
 
-    public double getHeadingRads() {
-        return odo.getHeading(AngleUnit.RADIANS);
-    }
 
-    public double getHeadingDeg() {
-        return odo.getHeading(AngleUnit.DEGREES);
-    }
 
     public void driveFieldCentric(double gamepadX, double gamepadY, double gamepadRX, double heading) {
         double rotX = gamepadX * Math.cos(-heading) - gamepadY * Math.sin(-heading);
@@ -85,15 +69,6 @@ public class DriveSubsystem extends SubsystemBase {
         leftBack.setPower(power);
         rightFront.setPower(power);
         rightBack.setPower(power);
-    }
-
-    public void resetHeading(){
-        odo.recalibrateIMU();
-    }
-
-    public void odoUpdate() {
-        odo.update();
-
     }
 
 

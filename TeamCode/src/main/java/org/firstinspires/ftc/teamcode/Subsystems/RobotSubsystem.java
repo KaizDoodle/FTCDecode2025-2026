@@ -12,6 +12,7 @@ public abstract class RobotSubsystem extends LinearOpMode {
 //    public WristSubsystem wrist;
 //    public IntakeSubsystem intake;
     public DriveSubsystem drive;
+    public OdometrySubsystem odo;
 //    public LMECSubsystem lmec;
 
     public CommandScheduler cs = CommandScheduler.getInstance();
@@ -29,12 +30,14 @@ public abstract class RobotSubsystem extends LinearOpMode {
     public void initialize(HardwareMap hardwareMap) {
 
         drive = new DriveSubsystem(hardwareMap);
+        odo = new OdometrySubsystem(hardwareMap);
+
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
 //        wrist = new WristSubsystem(hardwareMap, telemetry);
 //        slides = new SlideSubsystem(hardwareMap);
 //        lmec = new LMECSubsystem(hardwareMap);
 
-        CommandScheduler.getInstance().registerSubsystem(drive);
+        CommandScheduler.getInstance().registerSubsystem(drive, odo);
 
     }
 
@@ -47,7 +50,7 @@ public abstract class RobotSubsystem extends LinearOpMode {
     public void update() {
         CommandScheduler.getInstance().run();
         telemetry.update();
-        drive.odoUpdate();
+        odo.odoUpdate();
 
     }
     public void end() {

@@ -26,7 +26,7 @@ public class DefaultDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        driveSubsystem.driveFieldCentric(x.getAsDouble() + getXModPower(), y.getAsDouble() + getYModPower(), rx.getAsDouble() + getRModPower(), heading);
+        driveSubsystem.driveFieldCentric(x.getAsDouble() + getXModPower(), -y.getAsDouble() + getYModPower(), rx.getAsDouble() + getRModPower(), heading);
     }
 
     public double getXModPower() {

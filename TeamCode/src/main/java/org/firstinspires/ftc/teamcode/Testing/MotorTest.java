@@ -14,10 +14,9 @@ public class MotorTest extends RobotSubsystem {
     @Override
     public void runOpMode() throws InterruptedException {
 
-
-
         waitForStart();
-initialize(hardwareMap);
+        initialize(hardwareMap);
+
             while (opModeIsActive()){
 
                 drive.setMotorPower(0.2);
