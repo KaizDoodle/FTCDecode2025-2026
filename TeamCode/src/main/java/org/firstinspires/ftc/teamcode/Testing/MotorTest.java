@@ -67,10 +67,10 @@ public class MotorTest extends LinearOpMode {
                         Double.valueOf(frontRightPower).isNaN() ||
                         Double.valueOf(backRightPower).isNaN())) {
 
-                    leftFront.setPower(frontLeftPower);
-                    leftBack.setPower(backLeftPower);
-                    rightFront.setPower(frontRightPower);
-                    rightBack.setPower(backRightPower);
+                    leftFront.setPower(1);
+                    leftBack.setPower(-1);
+                    rightFront.setPower(-1);
+                    rightBack.setPower(1);
                 }
             }
 
