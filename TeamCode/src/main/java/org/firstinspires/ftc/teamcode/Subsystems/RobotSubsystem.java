@@ -2,18 +2,22 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
-public abstract class RobotSubsystem extends LinearOpMode {
+
+public abstract class RobotSubsystem extends OpMode {
 
     public SlideSubsystem slides;
-//    public WristSubsystem wrist;
-//    public IntakeSubsystem intake;
+
     public DriveSubsystem drive;
-    public OdometrySubsystem odo;
-//    public LMECSubsystem lmec;
+    public Follower follower;
+
 
     public CommandScheduler cs = CommandScheduler.getInstance();
 
@@ -28,16 +32,16 @@ public abstract class RobotSubsystem extends LinearOpMode {
     public FSMStates robotState = FSMStates.NONE;
 
     public void initialize(HardwareMap hardwareMap) {
+        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
 
-        drive = new DriveSubsystem(hardwareMap);
-        odo = new OdometrySubsystem(hardwareMap);
+        drive = new DriveSubsystem(hardwareMap, follower);
 
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
 //        wrist = new WristSubsystem(hardwareMap, telemetry);
 //        slides = new SlideSubsystem(hardwareMap);
 //        lmec = new LMECSubsystem(hardwareMap);
 
-        CommandScheduler.getInstance().registerSubsystem(drive, odo);
+        CommandScheduler.getInstance().registerSubsystem(drive);
 
     }
 
@@ -50,7 +54,6 @@ public abstract class RobotSubsystem extends LinearOpMode {
     public void update() {
         CommandScheduler.getInstance().run();
         telemetry.update();
-        odo.odoUpdate();
 
     }
     public void end() {

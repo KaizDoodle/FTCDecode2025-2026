@@ -1,80 +1,33 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import org.firstinspires.ftc.teamcode.Drivers.GoBildaPinpointDriver;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
 public class DriveSubsystem extends SubsystemBase {
     GoBildaPinpointDriver odo;
-
-    DcMotor leftFront;
-    DcMotor leftBack;
-    DcMotor rightBack;
-    DcMotor rightFront;
-    
-
-    public DriveSubsystem(final HardwareMap hardwareMap) {
-        for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
-            module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
-        }
-        leftFront = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        leftBack = hardwareMap.get(DcMotorEx.class, "backLeft");
-        rightBack = hardwareMap.get(DcMotorEx.class, "backRight");
-        rightFront = hardwareMap.get(DcMotorEx.class, "frontRight");
+    Follower follower;
 
 
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-        odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
-        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        odo.resetPosAndIMU();
+    public DriveSubsystem(final HardwareMap hardwareMap, Follower follower) {
+        this.follower = follower;
     }
 
-
-
-    public void driveFieldCentric(double gamepadX, double gamepadY, double gamepadRX) {
-        double heading = getHeadingRads();
-        double rotX = gamepadX * Math.cos(-heading) - gamepadY * Math.sin(-heading);
-        double rotY = gamepadX * Math.sin(-heading) + gamepadY * Math.cos(-heading);
-
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(gamepadRX), 1);
-        double frontLeftPower = (rotY + rotX + gamepadRX) / denominator;
-        double backLeftPower = (rotY - rotX + gamepadRX) / denominator;
-        double frontRightPower = (rotY - rotX - gamepadRX) / denominator;
-        double backRightPower = (rotY + rotX - gamepadRX) / denominator;
-        if (!(Double.valueOf(frontLeftPower).isNaN() ||
-                Double.valueOf(backLeftPower).isNaN() ||
-                Double.valueOf(frontRightPower).isNaN() ||
-                Double.valueOf(backRightPower).isNaN())) {
-
-            leftFront.setPower(frontLeftPower);
-            leftBack.setPower(backLeftPower);
-            rightFront.setPower(frontRightPower);
-            rightBack.setPower(backRightPower);
-        }
-    }
-
-    public void setMotorPower (double power){
-        leftFront.setPower(power);
-        leftBack.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(power);
+    public void driveFieldCentric(double left_stick_x, double left_stick_y , double gamepadRX) {
+        follower.setTeleOpMovementVectors(-left_stick_y, -left_stick_x, -gamepadRX, false);
+        follower.update();
     }
 
     public double getHeadingRads() {

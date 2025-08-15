@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Commands.Custom.DefaultDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.Custom.ResetFieldCentricCommand;
-import org.firstinspires.ftc.teamcode.Subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.Subsystems.OdometrySubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.RobotSubsystem;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
@@ -20,14 +16,17 @@ public class FieldCentricTest extends RobotSubsystem {
 
 
 
+
+
+
+    public void configureOperator() {
+
+    }
+
     @Override
-    public void runOpMode() {
-
-
+    public void init() {
         driverPad = new GamepadEx(gamepad1);
         operatorPad = new GamepadEx(gamepad2);
-
-
         initialize(hardwareMap);
 
         CommandScheduler.getInstance().setDefaultCommand(drive,
@@ -40,20 +39,12 @@ public class FieldCentricTest extends RobotSubsystem {
         );
 
         configureOperator();
-        waitForStart();
 
-        while (opModeIsActive()){
-            update();
-        }
-        CommandScheduler.getInstance().reset();
     }
 
-
-    public void configureOperator() {
-
-        driverPad.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new ResetFieldCentricCommand(odo)
-        );
-
+    @Override
+    public void loop() {
+        update();
+        CommandScheduler.getInstance().reset();
     }
 }
