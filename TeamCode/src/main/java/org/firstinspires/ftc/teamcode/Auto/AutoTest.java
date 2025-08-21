@@ -16,29 +16,28 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.Constants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
-@Autonomous
+@Autonomous(name = "AutoTest", group = "Examples")
 public class AutoTest extends RobotSubsystem {
 
-
-    Path scorePreload;
-    public void buildPaths() {
-        scorePreload = new Path(new BezierLine(new Point(Constants.startpose), new Point(Constants.startpose)));
-        scorePreload.setLinearHeadingInterpolation(Constants.endingPose.getHeading(), Constants.endingPose.getHeading());
-    }
-
+    PathChain lineFollower;
 
     @Override
     public void init() {
-        initialize(hardwareMap);
 
-        buildPaths();
+        initialize(hardwareMap, new Pose(0,0,0));
+
+        lineFollower = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(Constants.startpose), new Point(Constants.endingPose)))
+                .setLinearHeadingInterpolation(Constants.startpose.getHeading(), Constants.endingPose.getHeading())
+                .build();
+
+        follower.followPath(lineFollower);
     }
 
     @Override
     public void loop() {
-        if (!follower.isBusy())
-            follower.followPath(scorePreload);
         follower.update();
+
 
 
     }

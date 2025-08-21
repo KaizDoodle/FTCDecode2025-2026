@@ -18,26 +18,24 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
 public class BezierLineCommand extends InstantCommand {
 
-    Pose startingPose;
-    Pose endingPose;
-    Follower follower;
-    Path scorePreload;
 
 
-    public BezierLineCommand(Pose startingPose, Pose endingPose, Follower follower){
 
-        this.startingPose = startingPose;
-        this.endingPose = endingPose;
-        this.follower = follower;
+    public BezierLineCommand(Pose startPose, Pose interPose, Follower follower, PathChain lineFollower){
+        lineFollower = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(startPose), new Point(interPose)))
+                .setLinearHeadingInterpolation(startPose.getHeading(), interPose.getHeading())
+                .build();
+
+        follower.followPath(lineFollower);
+
     }
 
 
     @Override
     public void initialize() {
 
-        scorePreload = new Path(new BezierLine(new Point(startingPose), new Point(startingPose)));
-        scorePreload.setLinearHeadingInterpolation(startingPose.getHeading(), endingPose.getHeading());
-        follower.followPath(scorePreload);
+
 
     }
 

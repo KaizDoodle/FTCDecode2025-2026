@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.RobotSubsystem;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
@@ -27,7 +28,7 @@ public class FieldCentricTest extends RobotSubsystem {
     public void init() {
         driverPad = new GamepadEx(gamepad1);
         operatorPad = new GamepadEx(gamepad2);
-        initialize(hardwareMap);
+        initialize(hardwareMap, new Pose(0,0,0));
 
         CommandScheduler.getInstance().setDefaultCommand(drive,
                 new DefaultDriveCommand(

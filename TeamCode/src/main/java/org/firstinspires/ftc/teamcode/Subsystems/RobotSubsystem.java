@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -31,9 +32,8 @@ public abstract class RobotSubsystem extends OpMode {
     }
     public FSMStates robotState = FSMStates.NONE;
 
-    public void initialize(HardwareMap hardwareMap) {
+    public void initialize(HardwareMap hardwareMap, Pose startPose) {
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
-
         drive = new DriveSubsystem(hardwareMap, follower);
 
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
@@ -41,6 +41,7 @@ public abstract class RobotSubsystem extends OpMode {
 //        slides = new SlideSubsystem(hardwareMap);
 //        lmec = new LMECSubsystem(hardwareMap);
 
+        follower.setStartingPose(startPose);
         CommandScheduler.getInstance().registerSubsystem(drive);
 
     }
