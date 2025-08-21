@@ -4,10 +4,15 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierLine;
+import com.pedropathing.pathgen.PathBuilder;
+import com.pedropathing.pathgen.PathChain;
+import com.pedropathing.pathgen.Point;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.constants.Constants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
@@ -30,6 +35,19 @@ public abstract class RobotSubsystem extends OpMode {
         FOLD,
         NONE
     }
+
+    public PathChain PathBuilder(PathChain pathChain ){
+
+         pathChain = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(Constants.startpose), new Point(Constants.endingPose)))
+                .setLinearHeadingInterpolation(Constants.startpose.getHeading(), Constants.endingPose.getHeading())
+                .build();
+
+        return pathChain;
+    }
+
+
+
     public FSMStates robotState = FSMStates.NONE;
 
     public void initialize(HardwareMap hardwareMap, Pose startPose) {

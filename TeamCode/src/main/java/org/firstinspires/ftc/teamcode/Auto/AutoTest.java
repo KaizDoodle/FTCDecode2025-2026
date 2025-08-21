@@ -38,7 +38,5 @@ public class AutoTest extends RobotSubsystem {
     public void loop() {
         follower.update();
 
-
-
     }
 }
