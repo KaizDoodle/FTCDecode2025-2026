@@ -74,7 +74,7 @@ public class RobotContainer {
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
 //        wrist = new WristSubsystem(hardwareMap, telemetry);
 //        slides = new SlideSubsystem(hardwareMap);
-//        lmec = new LMECSubsystem(hardwareMap);
+        lmec = new LMECSubsystem(hardwareMap);
 
         follower.setStartingPose(Constants.startpose);
         CommandScheduler.getInstance().registerSubsystem(drive);
