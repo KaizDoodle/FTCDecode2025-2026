@@ -7,18 +7,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Config.Core.Util.Alliance;
 import org.firstinspires.ftc.teamcode.Config.Core.Util.OpModeCommand;
-import org.firstinspires.ftc.teamcode.Config.Subsystems.RobotSubsystem;
+import org.firstinspires.ftc.teamcode.Config.Core.RobotContainer;
 
 @Autonomous(name = "AutoTest", group = "Examples")
 public class AutoTest extends OpModeCommand {
 
     PathChain lineFollower;
 
-    RobotSubsystem robot;
+    RobotContainer robot;
     @Override
     public void init() {
 
-       robot = new RobotSubsystem(hardwareMap, new Pose(0, 0, 0), Alliance.BLUE);
+       robot = new RobotContainer(hardwareMap, new Pose(0, 0, 0), Alliance.BLUE);
        schedule(
                new RunCommand(robot::periodic),
                new SequentialCommandGroup(

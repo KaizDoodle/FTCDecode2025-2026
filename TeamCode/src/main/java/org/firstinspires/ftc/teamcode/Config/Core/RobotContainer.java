@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Config.Subsystems;
+package org.firstinspires.ftc.teamcode.Config.Core;
 
 
 import static org.firstinspires.ftc.teamcode.Config.Core.Util.Opmode.AUTONOMOUS;
@@ -6,24 +6,30 @@ import static org.firstinspires.ftc.teamcode.Config.Core.Util.Opmode.TELEOP;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Config.Commands.Custom.LMECControl;
 import org.firstinspires.ftc.teamcode.Config.Core.Util.Alliance;
 import org.firstinspires.ftc.teamcode.Config.Core.Util.Opmode;
+import org.firstinspires.ftc.teamcode.Config.Subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.Config.Subsystems.LMECSubsystem;
+import org.firstinspires.ftc.teamcode.Config.Subsystems.SlideSubsystem;
 import org.firstinspires.ftc.teamcode.Config.pedroPathing.constants.Constants;
 import org.firstinspires.ftc.teamcode.Config.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.Config.pedroPathing.constants.LConstants;
 
 
-public class RobotSubsystem {
+public class RobotContainer {
 
     public SlideSubsystem slides;
 
     public DriveSubsystem drive;
     public Follower follower;
+    public LMECSubsystem lmec;
     protected GamepadEx driverPad;
     protected GamepadEx operatorPad;
 
@@ -40,7 +46,7 @@ public class RobotSubsystem {
         NONE
     }
     //CONSTRUCTOR FOR AUTO TEST
-    public RobotSubsystem(HardwareMap hardwareMap, Pose startPose, Alliance alliance){
+    public RobotContainer(HardwareMap hardwareMap, Pose startPose, Alliance alliance){
         this.opmode = AUTONOMOUS;
         this.alliance = alliance;
 
@@ -50,13 +56,13 @@ public class RobotSubsystem {
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
 //        wrist = new WristSubsystem(hardwareMap, telemetry);
 //        slides = new SlideSubsystem(hardwareMap);
-//        lmec = new LMECSubsystem(hardwareMap);
+        lmec = new LMECSubsystem(hardwareMap);
 
         follower.setStartingPose(Constants.startpose);
-        CommandScheduler.getInstance().registerSubsystem(drive);
+        CommandScheduler.getInstance().registerSubsystem(drive, lmec);
 
     }
-    public RobotSubsystem(HardwareMap hardwareMap, Gamepad driver, Gamepad operator, Alliance alliance){
+    public RobotContainer(HardwareMap hardwareMap, Gamepad driver, Gamepad operator, Alliance alliance){
         this.opmode = TELEOP;
         this.alliance = alliance;
         this.driverPad = new GamepadEx(driver);
@@ -92,6 +98,11 @@ public class RobotSubsystem {
     public void teleOpControl(){
 
         follower.setTeleOpMovementVectors(driverPad.getLeftY(), -driverPad.getLeftX(), -driverPad.getRightX() * 0.5 , false);
+
+        driverPad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).toggleWhenPressed(
+                new LMECControl(lmec, false),
+                new LMECControl(lmec, true)
+        );
 
     }
     public FSMStates robotState = FSMStates.NONE;
