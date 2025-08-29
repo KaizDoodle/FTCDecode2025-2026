@@ -91,7 +91,7 @@ public class RobotSubsystem {
 
     public void teleOpControl(){
 
-        follower.setTeleOpMovementVectors(driverPad.getLeftY(), -driverPad.getLeftX(), -driverPad.getRightX(), false);
+        follower.setTeleOpMovementVectors(driverPad.getLeftY(), -driverPad.getLeftX(), -driverPad.getRightX() * 0.5 , false);
 
     }
     public FSMStates robotState = FSMStates.NONE;
