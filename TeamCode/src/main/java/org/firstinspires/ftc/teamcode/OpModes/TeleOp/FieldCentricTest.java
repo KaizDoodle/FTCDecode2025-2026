@@ -12,9 +12,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 @TeleOp
 public class FieldCentricTest extends OpMode {
 
-    protected Gamepad driverPad;
-    protected Gamepad operatorPad;
-
     RobotSubsystem robot;
 
     public void configureOperator() {
@@ -23,7 +20,7 @@ public class FieldCentricTest extends OpMode {
 
     @Override
     public void init() {
-        robot = new RobotSubsystem(hardwareMap, driverPad, operatorPad, Alliance.BLUE);
+        robot = new RobotSubsystem(hardwareMap, gamepad1, gamepad2, Alliance.BLUE);
 
 //        CommandScheduler.getInstance().setDefaultCommand(drive,
 //                new DefaultDriveCommand(
