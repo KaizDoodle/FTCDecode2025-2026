@@ -23,6 +23,7 @@ public abstract class RobotSubsystem extends OpMode {
 
     public DriveSubsystem drive;
     public Follower follower;
+    public LMECSubsystem lmec;
 
 
     public CommandScheduler cs = CommandScheduler.getInstance();

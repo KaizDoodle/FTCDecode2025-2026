@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.Testing;
 
+import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Drivers.GoBildaPinpointDriver;
@@ -19,6 +22,10 @@ public class MotorTest extends LinearOpMode {
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor rightFront;
+
+    Servo LMECFront;
+    Servo LMECBack;
+
     GoBildaPinpointDriver odo;
 
 
@@ -28,7 +35,9 @@ public class MotorTest extends LinearOpMode {
         leftBack = hardwareMap.get(DcMotorEx.class, "backLeft");
         rightBack = hardwareMap.get(DcMotorEx.class, "backRight");
         rightFront = hardwareMap.get(DcMotorEx.class, "frontRight");
-        odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+
+        LMECBack = hardwareMap.get(Servo.class, "LMECBack");
+        LMECFront = hardwareMap.get(Servo.class, "LMECFront");
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -38,40 +47,16 @@ public class MotorTest extends LinearOpMode {
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        odo.resetPosAndIMU();
+
 
         waitForStart();
         double heading;
         while (opModeIsActive()){
 
-            odo.update();
-
-            double gamepadX = -gamepad1.left_stick_x;
-            double gamepadY = gamepad1.left_stick_y;
-            double gamepadRX = gamepad1.right_stick_x;
+                LMECBack.setPosition(0);
+                LMECFront.setPosition(0);
 
 
-            heading =  odo.getHeading(AngleUnit.RADIANS);
-                double rotX = gamepadX * Math.cos(-heading) - gamepadY * Math.sin(-heading);
-                double rotY = gamepadX * Math.sin(-heading) + gamepadY * Math.cos(-heading);
-
-                double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(gamepadRX), 1);
-                double frontLeftPower = (rotY + rotX + gamepadRX) / denominator;
-                double backLeftPower = (rotY - rotX + gamepadRX) / denominator;
-                double frontRightPower = (rotY - rotX - gamepadRX) / denominator;
-                double backRightPower = (rotY + rotX - gamepadRX) / denominator;
-                if (!(Double.valueOf(frontLeftPower).isNaN() ||
-                        Double.valueOf(backLeftPower).isNaN() ||
-                        Double.valueOf(frontRightPower).isNaN() ||
-                        Double.valueOf(backRightPower).isNaN())) {
-
-                    leftFront.setPower(1);
-                    leftBack.setPower(-1);
-                    rightFront.setPower(-1);
-                    rightBack.setPower(1);
-                }
             }
 
     }
