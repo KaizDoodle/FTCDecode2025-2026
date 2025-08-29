@@ -6,13 +6,14 @@ import org.firstinspires.ftc.teamcode.Config.Subsystems.RobotSubsystem;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 
 @TeleOp
 public class FieldCentricTest extends OpMode {
 
-    protected GamepadEx driverPad = new GamepadEx(gamepad1);
-    protected GamepadEx operatorPad = new GamepadEx(gamepad2);
+    protected Gamepad driverPad;
+    protected Gamepad operatorPad;
 
     RobotSubsystem robot;
 

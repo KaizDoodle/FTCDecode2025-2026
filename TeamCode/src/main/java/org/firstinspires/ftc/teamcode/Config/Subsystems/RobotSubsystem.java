@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Config.Core.Util.Alliance;
@@ -55,12 +56,11 @@ public class RobotSubsystem {
         CommandScheduler.getInstance().registerSubsystem(drive);
 
     }
-    public RobotSubsystem(HardwareMap hardwareMap, GamepadEx driver, GamepadEx operator, Alliance alliance){
+    public RobotSubsystem(HardwareMap hardwareMap, Gamepad driver, Gamepad operator, Alliance alliance){
         this.opmode = TELEOP;
         this.alliance = alliance;
-        this.driverPad = driver;
-        this.operatorPad = operator;
-
+        this.driverPad = new GamepadEx(driver);
+        this.operatorPad = new GamepadEx(operator);
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         drive = new DriveSubsystem(hardwareMap, follower);
