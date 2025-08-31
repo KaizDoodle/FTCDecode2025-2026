@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Config.Drivers.GoBildaPinpointDriver;
 
-@TeleOp
+@Autonomous(name="LMEC zero", group="Linear OpMode")
 public class MotorTest extends LinearOpMode {
 
 
@@ -52,8 +52,8 @@ public class MotorTest extends LinearOpMode {
         double heading;
         while (opModeIsActive()){
 
-                LMECBack.setPosition(0);
-                LMECFront.setPosition(0);
+                LMECBack.setPosition(0.0);
+                LMECFront.setPosition(0.0);
 
 
             }

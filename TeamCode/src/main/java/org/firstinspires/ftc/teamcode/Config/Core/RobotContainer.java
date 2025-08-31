@@ -12,6 +12,7 @@ import com.pedropathing.localization.Pose;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Config.Commands.Custom.LMECControl;
 import org.firstinspires.ftc.teamcode.Config.Core.Util.Alliance;
 import org.firstinspires.ftc.teamcode.Config.Core.Util.Opmode;
@@ -32,6 +33,7 @@ public class RobotContainer {
     public LMECSubsystem lmec;
     protected GamepadEx driverPad;
     protected GamepadEx operatorPad;
+
 
     private Alliance alliance;
     private Opmode opmode;
@@ -62,7 +64,7 @@ public class RobotContainer {
         CommandScheduler.getInstance().registerSubsystem(drive, lmec);
 
     }
-    public RobotContainer(HardwareMap hardwareMap, Gamepad driver, Gamepad operator, Alliance alliance){
+    public RobotContainer(HardwareMap hardwareMap, Gamepad driver, Gamepad operator, Alliance alliance, Telemetry telemetry){
         this.opmode = TELEOP;
         this.alliance = alliance;
         this.driverPad = new GamepadEx(driver);
@@ -77,11 +79,17 @@ public class RobotContainer {
         lmec = new LMECSubsystem(hardwareMap);
 
         follower.setStartingPose(Constants.startpose);
-        CommandScheduler.getInstance().registerSubsystem(drive);
+        CommandScheduler.getInstance().registerSubsystem(drive, lmec);
 
     }
 
     public void periodic() {
+        if (lmec.getState() == LMECSubsystem.LockState.UNLOCKED)
+            follower.setTeleOpMovementVectors(driverPad.getLeftY(), -driverPad.getLeftX(), -driverPad.getRightX() * 0.5 , false);
+        if (lmec.getState() == LMECSubsystem.LockState.LOCKED)
+            follower.setTeleOpMovementVectors(driverPad.getLeftY(), 0, -driverPad.getRightX() * 0.8 , false);
+
+
 //        t.addData("path", f.getCurrentPath());
 
 //        e.periodic();
@@ -90,6 +98,7 @@ public class RobotContainer {
 //        o.periodic();
         follower.update();
 //        t.update();
+        CommandScheduler.getInstance().run();
     }
     public void tStart(){
         follower.startTeleopDrive();
@@ -97,29 +106,19 @@ public class RobotContainer {
 
     public void teleOpControl(){
 
-        follower.setTeleOpMovementVectors(driverPad.getLeftY(), -driverPad.getLeftX(), -driverPad.getRightX() * 0.5 , false);
-
-        driverPad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).toggleWhenPressed(
-                new LMECControl(lmec, false),
-                new LMECControl(lmec, true)
-        );
+        driverPad.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new LMECControl(lmec, true))
+                .whenReleased(new LMECControl(lmec, false));
 
     }
     public FSMStates robotState = FSMStates.NONE;
 
-
-
-
-
     public void update() {
         CommandScheduler.getInstance().run();
-
-
     }
     public void end() {
         cs.reset();
     }
-
 
     public void setState(FSMStates state) {
         robotState = state;
